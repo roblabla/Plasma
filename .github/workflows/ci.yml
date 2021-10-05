@@ -265,3 +265,4 @@ jobs:
         with:
           name: plasma-${{ matrix.platform.str }}-${{ matrix.cfg.str }}
           path: build/install
+
