@@ -57,7 +57,7 @@ import enum
 
 # define the attributes that will be entered in max
 Activate = ptAttribActivator(1, "Region Sensor")
-MultiStage01 = ptAttribBehavior(2, "NPC Multistage behavior",netForce=1)
+MultiStage01 = ptAttribBehavior(2, "NPC Multistage behavior", netForce=0, netProp=0)
 NpcSpawner = ptAttribActivator(3, "NPC Spawn point")
 
 ##playsound01 = ptAttribResponder(4,"Rspndr: Sound01")
