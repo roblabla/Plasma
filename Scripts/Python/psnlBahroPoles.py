@@ -504,6 +504,29 @@ class psnlBahroPoles(ptModifier):
             else:
                 self.Poles["Kadish"]["Enabled"] = 0
 
+    def LinkToAge(self, ageName, spawnpoint):
+        ageVault = ptAgeVault()
+        PAL = ageVault.getAgesIOwnFolder()
+        contents = PAL.getChildNodeRefList()
+        link = None
+        for content in contents:
+            link = content.getChild().upcastToAgeLinkNode()
+            info = link.getAgeInfo()
+            if info and info.getAgeFilename() == ageName:
+                # found our link
+                PtDebugPrint("psnlBahroPoles.LinkToAge():\tfound Owned link", info.getAgeFilename())
+                break
+        if link is None:
+            PtDebugPrint("Found no links to age", ageName)
+            return
+
+        link = link.asAgeLinkStruct()
+
+        link.setSpawnPoint(spawnpoint)
+
+        linkMgr = ptNetLinkingMgr()
+        linkMgr.linkToAge(link)
+        PtDebugPrint("LinkToAge Done")
 
     def OnNotify(self,state,id,events):
         PtDebugPrint("DEBUG: psnlBahroPoles.OnNotify():\tid = %d" % id)
@@ -586,8 +609,10 @@ class psnlBahroPoles(ptModifier):
             for event in events:
                 if event[0] == kVariableEvent:
                     if event[1] == "LinkOut" and PtWasLocallyNotified(self.key):
-                        respCleftLinkOut.run(self.key, avatar=PtGetLocalAvatar())
-                    break        	
+                        # Ensure we always end up in the correct age.
+                        #respCleftLinkOut.run(self.key, avatar=PtGetLocalAvatar())
+                        self.LinkToAge("Cleft", ptSpawnPointInfo("Default", "LinkInPointDefault"))
+                    break
 
         elif id == respTeledahnOneShot.id:
             if PtWasLocallyNotified(self.key):

@@ -3,3 +3,4 @@
 *.ICO	-text
 *.ico	-text
 *.zip	-text
+*.py	 text eol=lf

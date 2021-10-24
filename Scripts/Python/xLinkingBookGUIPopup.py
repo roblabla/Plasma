@@ -432,11 +432,12 @@ class xLinkingBookGUIPopup(ptModifier):
             #it checks if a Tomahna panel is used to link with,
             #if so it sets (or creates and sets, if not already present) a Tomahna chronicle entry to yes,
             #which is then read in by Cleft.py to load in the Tomahna pages
-            if agePanel == "Cleft":
-                vault = ptVault()
-                if not vault.amOwnerOfCurrentAge():
-                    agePanel = "DisabledDesert"
-            elif agePanel == "TomahnaFromCleft":
+            #if agePanel == "Cleft":
+            #    vault = ptVault()
+            #    if not vault.amOwnerOfCurrentAge():
+            #        agePanel = "DisabledDesert"
+            #elif agePanel == "TomahnaFromCleft":
+            if agePanel == "TomahnaFromCleft":
                 vault = ptVault()
                 entry = vault.findChronicleEntry("TomahnaLoad")
                 if entry is not None:
