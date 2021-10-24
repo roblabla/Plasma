@@ -186,6 +186,22 @@ class clftNpcZandi(ptModifier):
                 PtDebugPrint("zandi really is done and is ready to say more")
                 self.IsTalking = 0
 
+    def OnAvatarSpawn(self, b):
+        PtDebugPrint("An avatar got spawned", b)
+        if self.NpcName is None:
+            # Iterate over the spawned NPC, find ours.
+            for i in range(PtGetNPCCount()):
+                npc = PtGetNPCByID(i)
+                if npc.getName() == "Zandi":
+                    PtDebugPrint("Found an already spawned Zandi!")
+                    self.NpcName = npc
+                    MultiStage01.run(self.NpcName)
+                    break
+
+            if self.NpcName is None:
+                PtDebugPrint("Could not find zandi")
+
+
     def OnTimer(self,id):
         #~ global firstpauserange
         if id < 10:
