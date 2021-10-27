@@ -525,7 +525,7 @@ class psnlBahroPoles(ptModifier):
         link.setSpawnPoint(spawnpoint)
 
         linkMgr = ptNetLinkingMgr()
-        linkMgr.linkToAge(link)
+        linkMgr.linkToAge(link, "FishBookLinkOut")
         PtDebugPrint("LinkToAge Done")
 
     def OnNotify(self,state,id,events):
@@ -610,9 +610,12 @@ class psnlBahroPoles(ptModifier):
                 if event[0] == kVariableEvent:
                     if event[1] == "LinkOut" and PtWasLocallyNotified(self.key):
                         # Ensure we always end up in the correct age.
-                        #respCleftLinkOut.run(self.key, avatar=PtGetLocalAvatar())
-                        self.LinkToAge("Cleft", ptSpawnPointInfo("Default", "LinkInPointDefault"))
+                        respCleftLinkOut.run(self.key, avatar=PtGetLocalAvatar())
                     break
+        elif id == respCleftLinkOut.id:
+            for event in events:
+                PtDebugPrint("Got cleft linkout responder", event)
+            self.LinkToAge("Cleft", ptSpawnPointInfo("Default", "LinkInPointDefault"))
 
         elif id == respTeledahnOneShot.id:
             if PtWasLocallyNotified(self.key):
